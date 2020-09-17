@@ -23,6 +23,14 @@ public class Tarea {
 	
 	@Column(name = "nombre", nullable = false, length=100)
 	private String nombre;
+	
+	public Tarea() {
+		
+	}
+	
+	public Tarea(int idTarea) {
+		this.idTarea=idTarea;
+	}
 
 	public int getIdTarea() {
 		return idTarea;

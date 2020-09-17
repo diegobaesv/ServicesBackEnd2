@@ -26,6 +26,14 @@ public class Actividad {
 	
 	@Column(name = "nombre", nullable = false, length=100)
 	private String nombre;
+	
+	public Actividad() {
+		
+	}
+	
+	public Actividad(int idActividad) {
+		this.idActividad=idActividad;
+	}
 
 	public int getIdActividad() {
 		return idActividad;
