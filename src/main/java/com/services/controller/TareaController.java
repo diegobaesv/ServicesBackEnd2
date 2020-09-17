@@ -30,7 +30,7 @@ public class TareaController {
 	@Autowired
 	ITareaService serviceTarea;
 
-	@GetMapping(value = "/listar/tarea/{idActividad}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/listar/actividad/{idActividad}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<StepsResponse> findByActividad(@PathVariable("idActividad") Integer idActividad) {
 
 		StepsResponse stepsResponse = new StepsResponse();
