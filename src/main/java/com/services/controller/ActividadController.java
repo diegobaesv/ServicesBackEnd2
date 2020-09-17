@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.services.model.Actividad;
 import com.services.model.Categoria;
+import com.services.payload.response.StepsResponse;
 import com.services.service.IActividadService;
+import com.services.util.StepsUtil;
 
 
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST })
@@ -24,18 +26,28 @@ import com.services.service.IActividadService;
 @RequestMapping("/actividad")
 public class ActividadController {
 	
+	private final int INDEX_CONTROLLER = StepsUtil.INDEX_ACTIVIDADES;
+	
 	@Autowired
 	IActividadService serviceActividad;
 	
 	@GetMapping(value="/listar/categoria/{idCategoria}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Actividad>> findByCategoria(@PathVariable("idCategoria") Integer idCategoria){
-		List<Actividad> lista = new ArrayList<>();
+	public ResponseEntity<StepsResponse> findByCategoria(@PathVariable("idCategoria") Integer idCategoria){
+		
+		StepsResponse stepsResponse = new StepsResponse();
+		List<Actividad> listaActividad = new ArrayList<>();
 		try {
-			lista = serviceActividad.findByCategoria(new Categoria(idCategoria));
+			
+			listaActividad = serviceActividad.findByCategoria(new Categoria(idCategoria));
+			
+			stepsResponse.setData(listaActividad);
+			stepsResponse.setSteps(StepsUtil.getListStepsByIndex(INDEX_CONTROLLER));
+			stepsResponse.setIndex(INDEX_CONTROLLER);
+			
 		} catch (Exception e) {
 			new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<List<Actividad>>(lista, HttpStatus.OK);
+		return new ResponseEntity<StepsResponse>(stepsResponse, HttpStatus.OK);
 	}
 
 }
